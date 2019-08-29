@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 
 namespace RedditListener
@@ -9,10 +10,14 @@ namespace RedditListener
         {
             var logger = ConfigureLogger();
 
-            logger.Information(Environment.GetEnvironmentVariable("REDDIT_USER"));
-            logger.Information(Environment.GetEnvironmentVariable("REDDIT_REDIRECT"));
-
             Console.ReadLine();
+        }
+
+        private static void RegisterServices()
+        {
+            var collection = new ServiceCollection();
+
+            collection.AddSingleton<ILogger>(Log.Logger);
         }
 
         private static ILogger ConfigureLogger()
