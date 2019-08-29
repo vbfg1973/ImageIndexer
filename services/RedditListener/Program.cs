@@ -1,4 +1,5 @@
 ﻿using System;
+using Serilog;
 
 namespace RedditListener
 {
@@ -6,10 +7,23 @@ namespace RedditListener
     {
         static void Main(string[] args)
         {
-            for (var i = 0; i < 10000; i++)
-                Console.WriteLine("Hello World!");
+            var logger = ConfigureLogger();
+
+            logger.Information(Environment.GetEnvironmentVariable("REDDIT_USER"));
+            logger.Information(Environment.GetEnvironmentVariable("REDDIT_REDIRECT"));
 
             Console.ReadLine();
+        }
+
+        private static ILogger ConfigureLogger()
+        {
+            var logger = new LoggerConfiguration()
+                .WriteTo
+                .Console();
+
+            Log.Logger = logger.CreateLogger();
+
+            return Log.Logger;
         }
     }
 }

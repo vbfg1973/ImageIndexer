@@ -34,6 +34,12 @@ services:
     build:
       context: .
       dockerfile: redditlistener.Dockerfile
+    environment:
+      REDDIT_USER: "Father__Rolfe"
+      REDDIT_PASS: "2K1omgifos!"
+      REDDIT_CLIENTID: "RmafTtvYHjJy2w"
+      REDDIT_SECRET: "iVStCj0FAZIRuffqCIPEbbIt-7s"
+      REDDIT_REDIRECT: "http://127.0.0.1/"
     tty: true
     depends_on:
       - imagerabbitmq
