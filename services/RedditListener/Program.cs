@@ -38,7 +38,15 @@ namespace RedditListener
                 logger.Information(sr);
                 var subscriber = _serviceProvider.GetService<IRedditSubscriber>();
 
-                subscriber.Subscribe(sr).Wait();
+                try
+                {
+                    subscriber.Subscribe(sr).Wait();
+                }
+
+                catch (Exception e)
+                {
+                    logger.Error(e.Message);
+                }
             }
 
             Console.ReadLine();

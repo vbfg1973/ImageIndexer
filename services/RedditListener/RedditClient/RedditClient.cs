@@ -15,6 +15,7 @@ namespace RedditListener.RedditClient
         private Subreddit _subreddit;
 
         private RedditPostObserver _posts;
+        private RedditCommentObserver _comments;
 
         public RedditClient(BotWebAgent botWebAgent, ILogger logger)
         {
@@ -29,6 +30,7 @@ namespace RedditListener.RedditClient
 
             await _subreddit.SubscribeAsync();
             SubscribePosts(subredditName);
+            SubscribeComments(subredditName);
         }
 
         private void SubscribePosts(string subredditName)
@@ -38,6 +40,18 @@ namespace RedditListener.RedditClient
 
             var postsStream = _subreddit.GetPosts().Stream();
             postsStream.Subscribe(_posts);
+
+            CancellationToken postCancellationToken = new CancellationToken();
+            postsStream.Enumerate(postCancellationToken);
+        }
+
+        private void SubscribeComments(string subredditName)
+        {
+            _logger.Information($"Attempting to subscribe to comments on {subredditName}");
+            _comments = new RedditCommentObserver(subredditName, _logger);
+
+            var postsStream = _subreddit.GetComments().Stream();
+            postsStream.Subscribe(_comments);
 
             CancellationToken postCancellationToken = new CancellationToken();
             postsStream.Enumerate(postCancellationToken);
