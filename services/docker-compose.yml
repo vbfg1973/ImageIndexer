@@ -7,6 +7,7 @@ services:
       RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
       RABBITMQ_DEFAULT_USER: "rabbitmq"
       RABBITMQ_DEFAULT_PASS: "1984BBiwy!"
+      RABBITMQ_DEFAULT_VHOST: "/"
     ports:
       - "5672:5672"
       - "15672:15672"
