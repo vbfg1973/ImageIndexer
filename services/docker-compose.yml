@@ -1,0 +1,57 @@
+version: "3"
+
+services:
+  imagerabbitmq:
+    image: rabbitmq:3-management
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+      RABBITMQ_DEFAULT_USER: "rabbitmq"
+      RABBITMQ_DEFAULT_PASS: "1984BBiwy!"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    container_name: imagerabbitmq
+    hostname: imagerabbitmq
+  imagepostgres:
+    image: postgres:11
+    container_name: imagepostgres
+    ports:
+      - "54320:5432"
+    volumes:
+      - postgresdata:/var/lib/postgresql/data
+  imageapi:
+    image: imageapi
+    build:
+      context: .
+      dockerfile: imageapi.Dockerfile
+    ports: 
+      - "8081:80"
+    depends_on:
+      - imagerabbitmq
+      - imagepostgres
+  redditlistener:
+    image: redditlistener
+    build:
+      context: .
+      dockerfile: redditlistener.Dockerfile
+    tty: true
+    depends_on:
+      - imagerabbitmq
+  imageindexer:
+    image: imageindexer
+    build:
+      context: .
+      dockerfile: imageindexer.Dockerfile
+    tty: true
+    depends_on:
+      - imagerabbitmq
+  imageretrieval:
+    image: imageretrieval
+    build:
+      context: .
+      dockerfile: imageretrieval.Dockerfile
+    tty: true
+    depends_on:
+      - imagerabbitmq
+volumes:
+  postgresdata:
