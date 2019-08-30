@@ -1,7 +1,7 @@
 ﻿using EasyNetQ;
 using Serilog;
 
-namespace ivendi.Kernel.Receiver
+namespace ImageIndexer.Infrastructure.Messaging
 {
     public interface IBusFactory
     {

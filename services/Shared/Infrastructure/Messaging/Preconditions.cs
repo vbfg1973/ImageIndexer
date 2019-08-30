@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ivendi.Kernel.Receiver
+namespace ImageIndexer.Infrastructure.Messaging
 {
     internal static class Preconditions
     {

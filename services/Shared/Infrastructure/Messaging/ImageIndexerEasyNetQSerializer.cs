@@ -1,9 +1,9 @@
 ﻿using System;
 using EasyNetQ;
 
-namespace ivendi.Kernel.Receiver
+namespace ImageIndexer.Infrastructure.Messaging
 {
-    public class iVendiEasyNetQSerializer : ITypeNameSerializer
+    public class ImageIndexerEasyNetQSerializer : ITypeNameSerializer
     {
         public Type DeSerialize(string typeName)
         {

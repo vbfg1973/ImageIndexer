@@ -3,7 +3,7 @@ using EasyNetQ.ConnectionString;
 using Serilog;
 using JsonSerializer = EasyNetQ.JsonSerializer;
 
-namespace ivendi.Kernel.Receiver
+namespace ImageIndexer.Infrastructure.Messaging
 {
     public class BusFactory : IBusFactory
     {
@@ -32,7 +32,7 @@ namespace ivendi.Kernel.Receiver
                 serviceRegister =>
                 {
                     serviceRegister.Register<IConventions>(_ => new Conventions(new LegacyTypeNameSerializer()));
-                    serviceRegister.Register<ITypeNameSerializer>(_ => new iVendiEasyNetQSerializer());
+                    serviceRegister.Register<ITypeNameSerializer>(_ => new ImageIndexerEasyNetQSerializer());
                     serviceRegister.Register<ISerializer>(_ => new JsonSerializer());
                 });
         }
