@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Core.Dto;
 using Core.Events;
+using ImageIndexer.Infrastructure.Messaging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
@@ -15,9 +16,11 @@ namespace ImageApi.Controllers
     public class ImageRetrieveController : ControllerBase
     {
         private ILogger _logger;
+        private MessageDispatcher _dispatcher;
 
-        public ImageRetrieveController(ILogger logger)
+        public ImageRetrieveController(MessageDispatcher dispatcher, ILogger logger)
         {
+            _dispatcher = dispatcher;
             _logger = logger;
         }
 
@@ -35,6 +38,10 @@ namespace ImageApi.Controllers
                 Url = image.Url,
                 CreatedUtc = image.CreatedUtc
             };
+
+            var msg = new MessageEnvelope<ImageFound>(i);
+
+            _dispatcher.Dispatch(msg);
         }
     }
 }
