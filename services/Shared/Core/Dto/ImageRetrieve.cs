@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Reflection;
-using ImageIndexer.Infrastructure.Messaging;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Core.Events
+namespace Core.Dto
 {
-    public class ImageFound : Event
+    public class ImageRetrieve
     {
         public string RedditId { get; set; }
         public string Subreddit { get; set; }
