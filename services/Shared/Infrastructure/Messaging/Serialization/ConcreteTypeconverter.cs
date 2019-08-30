@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace ImageIndexer.Infrastructure.Messaging.Serialization
+namespace Infrastructure.Messaging.Serialization
 {
     public class ConcreteTypeConverter<TConcrete> : JsonConverter
     {

@@ -4,7 +4,7 @@ using System.Text;
 using EasyNetQ;
 using EasyNetQ.Topology;
 
-namespace ImageIndexer.Infrastructure.Messaging
+namespace Infrastructure.Messaging
 {
     public class MessageDispatcher
     {

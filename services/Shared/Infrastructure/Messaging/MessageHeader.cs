@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace ImageIndexer.Infrastructure.Messaging
+namespace Infrastructure.Messaging
 {
     public class MessageHeader : IMessageHeader
     {

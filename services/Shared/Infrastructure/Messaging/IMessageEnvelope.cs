@@ -1,4 +1,4 @@
-﻿namespace ImageIndexer.Infrastructure.Messaging
+﻿namespace Infrastructure.Messaging
 {
     public interface IMessageEnvelope<T> where T : IMessage
     {

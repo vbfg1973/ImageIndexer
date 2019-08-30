@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace ImageIndexer.Infrastructure.Messaging
+namespace Infrastructure.Messaging
 {
     public static class MessageBuilder
     {

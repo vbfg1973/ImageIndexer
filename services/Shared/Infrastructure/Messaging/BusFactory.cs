@@ -3,7 +3,7 @@ using EasyNetQ.ConnectionString;
 using Serilog;
 using JsonSerializer = EasyNetQ.JsonSerializer;
 
-namespace ImageIndexer.Infrastructure.Messaging
+namespace Infrastructure.Messaging
 {
     public class BusFactory : IBusFactory
     {

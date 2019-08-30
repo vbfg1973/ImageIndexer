@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace ImageIndexer.Infrastructure.Messaging
+namespace Infrastructure.Messaging
 {
     public static class StringExtensions
     {

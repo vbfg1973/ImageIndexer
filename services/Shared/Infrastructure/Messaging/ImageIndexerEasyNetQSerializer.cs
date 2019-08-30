@@ -1,7 +1,7 @@
 ﻿using System;
 using EasyNetQ;
 
-namespace ImageIndexer.Infrastructure.Messaging
+namespace Infrastructure.Messaging
 {
     public class ImageIndexerEasyNetQSerializer : ITypeNameSerializer
     {

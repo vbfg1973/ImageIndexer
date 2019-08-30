@@ -2,7 +2,7 @@
 using System.Text;
 using EasyNetQ;
 
-namespace ImageIndexer.Infrastructure.Messaging
+namespace Infrastructure.Messaging
 {
     public static class MessagePropertiesExtensions
     {

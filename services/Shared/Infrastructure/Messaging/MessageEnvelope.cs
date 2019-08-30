@@ -1,8 +1,8 @@
 ﻿using System;
-using ImageIndexer.Infrastructure.Messaging.Serialization;
+using Infrastructure.Messaging.Serialization;
 using Newtonsoft.Json;
 
-namespace ImageIndexer.Infrastructure.Messaging
+namespace Infrastructure.Messaging
 {
     public class MessageEnvelope<T> : IMessageEnvelope<T> where T : IMessage
     {

@@ -5,7 +5,7 @@ using EasyNetQ;
 using EasyNetQ.Topology;
 using Serilog;
 
-namespace ImageIndexer.Infrastructure.Messaging
+namespace Infrastructure.Messaging
 {
     public class EventBus
     {

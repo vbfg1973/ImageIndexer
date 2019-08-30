@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ImageIndexer.Infrastructure.Messaging
+namespace Infrastructure.Messaging
 {
     public interface IMessageHeader
     {
