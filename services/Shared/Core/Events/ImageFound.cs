@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Reflection;
-using ImageIndexer.Infrastructure.Messaging;
+using Infrastructure.Messaging;
 
 namespace Core.Events
 {

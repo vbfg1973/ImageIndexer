@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Core.Dto;
 using Core.Events;
-using ImageIndexer.Infrastructure.Messaging;
+using Infrastructure.Messaging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;

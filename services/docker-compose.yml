@@ -60,5 +60,8 @@ services:
     tty: true
     depends_on:
       - imagerabbitmq
+    volumes:
+      - images:/var/images
 volumes:
   postgresdata:
+  images:

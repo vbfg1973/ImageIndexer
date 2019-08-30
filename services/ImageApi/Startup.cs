@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using EasyNetQ;
 using ImageApi.Configuration;
 using ImageApi.Extensions;
-using ImageIndexer.Infrastructure.Messaging;
+using Infrastructure.Messaging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
