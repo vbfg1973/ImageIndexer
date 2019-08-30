@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Net.Http;
+using System.Text;
+using Core.Dto;
+using Newtonsoft.Json;
 using RedditSharp.Things;
 using Serilog;
 
@@ -29,8 +33,27 @@ namespace RedditListener.RedditClient.Observers
 
         public void OnNext(Post value)
         {
-            _logger.Information(
-                $"Post: {value.Id}\t{value.SubredditName}\t{value.AuthorName}\t{value.Title}\t{value.Url}\t{value.CreatedUTC.ToString("o")}");
+            var image = new ImageRetrieve()
+            {
+                RedditId = value.Id,
+                Url = value.Url.AbsoluteUri,
+                Subreddit = value.SubredditName,
+                Title = value.Title,
+                Author = value.AuthorName,
+                CreatedUtc = value.CreatedUTC
+            };
+
+            try
+            {
+                var client = new HttpClient();
+                var response = client.PostAsync("http://imageapi:80/api/imageretrieve",
+                    new StringContent(JsonConvert.SerializeObject(image), Encoding.UTF8, "application/json")).Result;
+            }
+
+            catch (Exception e)
+            {
+                _logger.Error(e.Message);
+            }
         }
     }
 }

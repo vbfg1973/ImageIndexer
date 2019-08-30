@@ -1,6 +1,8 @@
 FROM microsoft/dotnet:2.2-sdk AS build
 WORKDIR /src
 COPY ["RedditListener/RedditListener.csproj", "RedditListener/"]
+COPY ["Shared/Core/Core.csproj", "Shared/Core/"]
+COPY ["Shared/Infrastructure/Infrastructure.csproj", "Shared/Infrastructure/"]
 RUN dotnet restore "./RedditListener/RedditListener.csproj"
 COPY . .
 WORKDIR /src

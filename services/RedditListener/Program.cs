@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
@@ -21,6 +22,12 @@ namespace RedditListener
             // Configuration
             ReadConfiguration();
             var logger = ConfigureLogger();
+
+            for (var i = 20; i >= 0; i--)
+            {
+                logger.Information($"Sleeping {i}...");
+                Task.Delay(1000).Wait();
+            }
 
             // BotWebAgent
             _botWebAgent = new BotWebAgent(_settings.RedditListenerSettings.Username,
