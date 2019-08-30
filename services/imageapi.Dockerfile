@@ -5,6 +5,8 @@ EXPOSE 80
 FROM microsoft/dotnet:2.2-sdk AS build
 WORKDIR /src
 COPY ["ImageApi/ImageApi.csproj", "ImageApi/"]
+COPY ["Shared/Core/Core.csproj", "Shared/Core/"]
+COPY ["Shared/Infrastructure/Infrastructure.csproj", "Shared/Infrastructure/"]
 RUN dotnet restore "./ImageApi/ImageApi.csproj"
 COPY . .
 WORKDIR /src
