@@ -30,7 +30,7 @@ namespace RedditListener.RedditClient
 
             await _subreddit.SubscribeAsync();
             SubscribePosts(subredditName);
-            SubscribeComments(subredditName);
+//            SubscribeComments(subredditName);
         }
 
         private void SubscribePosts(string subredditName)
