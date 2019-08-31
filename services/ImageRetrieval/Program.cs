@@ -30,7 +30,7 @@ namespace ImageRetrieval
             eventRegistration.HandleEvent<ImageFound>(
                 (message, info) => Task.Factory.StartNew(() =>
                 {
-                    Console.WriteLine($"{message.Body.RedditId}\t{message.Body.Author}\t{message.Body.Subreddit}\t{message.Body.Url}");
+			log.Information($"{message.Body.RedditId}\t{message.Body.Title}\t{message.Body.Author}\t{message.Body.Subreddit}\t{message.Body.Url}\t{message.Body.CreatedUtc}");
                 }),
                 TimeSpan.FromSeconds(30).Milliseconds);
 
