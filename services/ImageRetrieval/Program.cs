@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using System.Net.Http;
 using Core.Events;
 using Infrastructure.Messaging;
 using ImageRetrieval.Configuration;
@@ -30,7 +31,26 @@ namespace ImageRetrieval
             eventRegistration.HandleEvent<ImageFound>(
                 (message, info) => Task.Factory.StartNew(() =>
                 {
-			log.Information($"{message.Body.RedditId}\t{message.Body.Title}\t{message.Body.Author}\t{message.Body.Subreddit}\t{message.Body.Url}\t{message.Body.CreatedUtc}");
+                    log.Information($"{message.Body.RedditId}\t{message.Body.Title}\t{message.Body.Author}\t{message.Body.Subreddit}\t{message.Body.Url}\t{message.Body.CreatedUtc}");
+
+                    if (message.Body.Url.EndsWith("jpg") || message.Body.Url.EndsWith("png") || message.Body.Url.EndsWith("jpeg")) {
+                        log.Information("Downloading");
+                        try {
+                            var client = new HttpClient();
+                            var response = client.GetAsync(message.Body.Url);
+
+                            var path = Path.Combine("/var/images/", string.Format($"{message.Body.RedditId}.jpg"));
+                            response.Content.ReadAsFileAsync(path, false);
+                        }
+
+                        catch (Exception e) {
+                            log.Error(e.Message);
+                        }
+                    }
+
+                    else {
+                        log.Information("Ignoring");
+                    }
                 }),
                 TimeSpan.FromSeconds(30).Milliseconds);
 
@@ -52,5 +72,33 @@ namespace ImageRetrieval
             return appSettings;
         }
 
+        public static Task ReadAsFileAsync(this HttpContent content, string filename, bool overwrite)
+        {
+            string pathname = Path.GetFullPath(filename);
+            if (!overwrite && File.Exists(filename))
+            {
+                throw new InvalidOperationException(string.Format("File {0} already exists.", pathname));
+            }
+    
+            FileStream fileStream = null;
+            try
+            {
+                fileStream = new FileStream(pathname, FileMode.Create, FileAccess.Write, FileShare.None);
+                return content.CopyToAsync(fileStream).ContinueWith(
+                    (copyTask) =>
+                    {
+                        fileStream.Close();
+                    });
+            }
+            catch
+            {
+                if (fileStream != null)
+                {
+                    fileStream.Close();
+                }
+    
+                throw;
+            }
+        }
     }
 }
