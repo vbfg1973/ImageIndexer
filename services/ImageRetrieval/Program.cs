@@ -37,10 +37,12 @@ namespace ImageRetrieval
                         log.Information("Downloading");
                         try {
                             var client = new HttpClient();
-                            var response = client.GetAsync(message.Body.Url);
+                            var response = client.GetAsync(message.Body.Url).Result;
 
                             var path = Path.Combine("/var/images/", string.Format($"{message.Body.RedditId}.jpg"));
                             response.Content.ReadAsFileAsync(path, false);
+
+                            log.Information($"Saved to {path}");
                         }
 
                         catch (Exception e) {
@@ -70,35 +72,6 @@ namespace ImageRetrieval
             _configuration.Bind("Settings", appSettings);
 
             return appSettings;
-        }
-
-        public static Task ReadAsFileAsync(this HttpContent content, string filename, bool overwrite)
-        {
-            string pathname = Path.GetFullPath(filename);
-            if (!overwrite && File.Exists(filename))
-            {
-                throw new InvalidOperationException(string.Format("File {0} already exists.", pathname));
-            }
-    
-            FileStream fileStream = null;
-            try
-            {
-                fileStream = new FileStream(pathname, FileMode.Create, FileAccess.Write, FileShare.None);
-                return content.CopyToAsync(fileStream).ContinueWith(
-                    (copyTask) =>
-                    {
-                        fileStream.Close();
-                    });
-            }
-            catch
-            {
-                if (fileStream != null)
-                {
-                    fileStream.Close();
-                }
-    
-                throw;
-            }
         }
     }
 }

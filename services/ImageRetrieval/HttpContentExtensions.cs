@@ -2,16 +2,10 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using System.Net.Http;
-using Core.Events;
-using Infrastructure.Messaging;
-using ImageRetrieval.Configuration;
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using Serilog;
 
 namespace ImageRetrieval
 {
-    public static lass HttpContentExtensions
+    public static class HttpContentExtensions
     {
         public static Task ReadAsFileAsync(this HttpContent content, string filename, bool overwrite)
         {
