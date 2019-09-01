@@ -34,6 +34,7 @@ namespace ImageApi.Controllers
             {
                 RedditId = image.RedditId,
                 Subreddit = image.Subreddit,
+                Title = image.Title,
                 Author = image.Author,
                 Url = image.Url,
                 CreatedUtc = image.CreatedUtc

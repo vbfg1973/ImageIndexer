@@ -1,6 +1,23 @@
 version: "3"
-
 services:
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 1984BBiwy!
+    ports:
+      - 27017:27017
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8080:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: 1984BBiwy!
+    depends_on:
+      - mongo
   imagerabbitmq:
     image: rabbitmq:3-management
     environment:
@@ -13,13 +30,6 @@ services:
       - "15672:15672"
     container_name: imagerabbitmq
     hostname: imagerabbitmq
-  imagepostgres:
-    image: postgres:11
-    container_name: imagepostgres
-    ports:
-      - "54320:5432"
-    volumes:
-      - postgresdata:/var/lib/postgresql/data
   imageapi:
     image: imageapi
     build:
@@ -29,7 +39,7 @@ services:
       - "8081:80"
     depends_on:
       - imagerabbitmq
-      - imagepostgres
+      - mongo
   redditlistener:
     image: redditlistener
     build:
@@ -44,6 +54,7 @@ services:
     tty: true
     depends_on:
       - imagerabbitmq
+      - mongo
   imageindexer:
     image: imageindexer
     build:
@@ -60,8 +71,9 @@ services:
     tty: true
     depends_on:
       - imagerabbitmq
+      - mongo
     volumes:
       - images:/var/images
 volumes:
-  postgresdata:
+  mongodata:
   images:

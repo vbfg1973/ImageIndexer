@@ -9,9 +9,16 @@ WORKDIR /src
 RUN dotnet build "./ImageRetrieval/ImageRetrieval.csproj" -c Debug -o /app
 
 FROM build AS publish
+
 RUN dotnet publish "./ImageRetrieval/ImageRetrieval.csproj" -c Debug -o /app
 
 FROM build AS final
 WORKDIR /app
 COPY --from=publish /app .
+RUN apt-get update \
+    && apt-get install -y --allow-unauthenticated \
+        libc6-dev \
+        libgdiplus \
+        libx11-dev \
+     && rm -rf /var/lib/apt/lists/*
 ENTRYPOINT ["dotnet", "./ImageRetrieval.dll"]

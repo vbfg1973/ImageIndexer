@@ -16,6 +16,8 @@
     <PackageReference Include="Serilog.Settings.Configuration" Version="3.1.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
     <PackageReference Include="Serilog.Sinks.Logentries" Version="4.0.0" />
+    <PackageReference Include="Shipwreck.phash" Version="0.4.1" />
+    <PackageReference Include="shipwreck.phash.bitmaps" Version="0.4.1" />
   </ItemGroup>
 
   <ItemGroup>

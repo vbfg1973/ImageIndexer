@@ -35,6 +35,11 @@ namespace Infrastructure.Messaging
             return queue;
         }
 
+        public IAdvancedBus AdvancedBus()
+        {
+            return _evtBus;
+        }
+
         private static string FullStopBeforeCapital(string s)
         {
             if (string.IsNullOrWhiteSpace(s))
