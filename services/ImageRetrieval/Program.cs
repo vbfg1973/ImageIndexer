@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using System.Net.Http;
@@ -18,6 +19,13 @@ namespace ImageRetrieval
 
         static void Main(string[] args)
         {
+            List<string> extensionsList = new List<string>()
+            {
+                "jpg",
+                "jpeg",
+                "png"
+            };
+
             _settings = LoadConfiguration();
             var log = new LoggerConfiguration()
                 .WriteTo.Console()
@@ -33,16 +41,28 @@ namespace ImageRetrieval
                 {
                     log.Information($"{message.Body.RedditId}\t{message.Body.Title}\t{message.Body.Author}\t{message.Body.Subreddit}\t{message.Body.Url}\t{message.Body.CreatedUtc}");
 
-                    if (message.Body.Url.EndsWith("jpg") || message.Body.Url.EndsWith("png") || message.Body.Url.EndsWith("jpeg")) {
+                    // Get file extension
+                    var parts = message.Body.Url.Split(".");
+                    var extension = parts[parts.Length - 1].ToLower();
+
+                    if (extensionsList.Contains(extension)) {
                         log.Information("Downloading");
                         try {
                             var client = new HttpClient();
                             var response = client.GetAsync(message.Body.Url).Result;
 
-                            var path = Path.Combine("/var/images/", string.Format($"{message.Body.RedditId}.jpg"));
+                            var dir = Path.Combine("/var/images", message.Body.Subreddit.ToLower());
+
+                            if (!Directory.Exists(dir))
+                            {
+                                log.Information($"Ceating directory {dir}");
+                                Directory.CreateDirectory(dir);
+                            }
+
+                            var path = Path.Combine(dir, string.Format($"{message.Body.RedditId}.{extension}"));
                             response.Content.ReadAsFileAsync(path, false);
 
-                            log.Information($"Saved to {path}");
+                            log.Information($"Saved {message.Body.RedditId} to {path}");
                         }
 
                         catch (Exception e) {
